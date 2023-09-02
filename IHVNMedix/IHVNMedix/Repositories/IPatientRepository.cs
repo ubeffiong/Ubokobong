@@ -11,7 +11,7 @@ namespace IHVNMedix.Repositories
         Task<Patient> GetPatientByIdAsync(int id);
         Task AddPatientAsync(Patient patient);
         Task UpdatePatientAsync(Patient patient);
-        Task DeletePatientAsync(int id);
+        Task DeletePatientAsync(int id); 
         Task<bool> PatientExistsAsync(int id);
     }
 }

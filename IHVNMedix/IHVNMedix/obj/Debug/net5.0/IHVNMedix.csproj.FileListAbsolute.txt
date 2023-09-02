@@ -169,3 +169,8 @@ D:\Development\Projects\IHVNMedix\IHVNMedix\bin\Debug\net5.0\Microsoft.Extension
 D:\Development\Projects\IHVNMedix\IHVNMedix\bin\Debug\net5.0\Microsoft.Extensions.Options.dll
 D:\Development\Projects\IHVNMedix\IHVNMedix\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
 D:\Development\Projects\IHVNMedix\IHVNMedix\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll
+D:\Development\Projects\IHVNMedix\IHVNMedix\obj\Debug\net5.0\Razor\Views\Encounters\Create.cshtml.g.cs
+D:\Development\Projects\IHVNMedix\IHVNMedix\obj\Debug\net5.0\Razor\Views\Encounters\Delete.cshtml.g.cs
+D:\Development\Projects\IHVNMedix\IHVNMedix\obj\Debug\net5.0\Razor\Views\Encounters\Details.cshtml.g.cs
+D:\Development\Projects\IHVNMedix\IHVNMedix\obj\Debug\net5.0\Razor\Views\Encounters\Edit.cshtml.g.cs
+D:\Development\Projects\IHVNMedix\IHVNMedix\obj\Debug\net5.0\Razor\Views\Encounters\Index.cshtml.g.cs
