@@ -12,5 +12,7 @@ namespace IHVNMedix.Models
         public DateTime EncounterDate { get; set; }
         public ICollection<Symptoms> Symptoms { get; set; }
         public ICollection<VitalSigns> VitalSigns { get; set; }
+        public ICollection<HealthItem> SymptomsResults { get; set; } // Initial and Symptoms from the API
+        public ICollection<Diagnosis> DiagnosisResults { get; set; } // Diagnosis results from the API
     }
 }

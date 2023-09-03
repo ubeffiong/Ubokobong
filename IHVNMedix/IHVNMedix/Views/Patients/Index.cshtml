@@ -1,71 +1,101 @@
-﻿@model IEnumerable<IHVNMedix.DTOs.PatientDto>
+﻿@model PatientRegistrationViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Patient Registration";
 }
 
-<h1>Index</h1>
+<h1>Patient Registration</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Register New Patient</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DOB)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.State)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gender)
-            </th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Date of Birth</th>
+            <th>Address</th>
+            <th>State</th>
+            <th>Phone Number</th>
+            <th>Gender</th>
+            <th>Action</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var patient in Model.Patients)
+        {
         <tr>
+                <td>@patient.FirstName</td>
+                <td>@patient.LastName</td>
+                <td>@patient.DOB.ToShortDateString()</td>
+                <td>@patient.Address</td>
+                <td>@patient.State</td>
+                <td>@patient.PhoneNumber</td>
+                <td>@patient.Gender</td>
             <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DOB)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.State)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@patient.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@patient.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@patient.Id">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+<!-- Patient registration form -->
+@using (Html.BeginForm("Create", "Patients", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label asp-for="NewPatient.FirstName"></label>
+        <input asp-for="NewPatient.FirstName" class="form-control" />
+        <span asp-validation-for="NewPatient.FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewPatient.LastName"></label>
+        <input asp-for="NewPatient.LastName" class="form-control" />
+        <span asp-validation-for="NewPatient.LastName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewPatient.DOB"></label>
+        <input asp-for="NewPatient.DOB" type="date" class="form-control" />
+        <span asp-validation-for="NewPatient.DOB" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewPatient.Address"></label>
+        <input asp-for="NewPatient.Address" class="form-control" />
+        <span asp-validation-for="NewPatient.Address" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewPatient.State"></label>
+        <input asp-for="NewPatient.State" class="form-control" />
+        <span asp-validation-for="NewPatient.State" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewPatient.PhoneNumber"></label>
+        <input asp-for="NewPatient.PhoneNumber" class="form-control" />
+        <span asp-validation-for="NewPatient.PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewPatient.Gender"></label>
+        <select asp-for="NewPatient.Gender" class="form-control">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+        <span asp-validation-for="NewPatient.Gender" class="text-danger"></span>
+    </div>
+
+    <!-- Add other patient registration fields here -->
+
+    <button type="submit" class="btn btn-primary">Register Patient</button>
+}
+

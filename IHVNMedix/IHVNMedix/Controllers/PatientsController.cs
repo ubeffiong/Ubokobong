@@ -27,8 +27,15 @@ namespace IHVNMedix.Controllers
         public async Task<IActionResult> Index()
         {
             var patients = await _patientRepository.GetAllPatientsAsync();
-            var patientDtos = _mapper.Map<IEnumerable<DoctorDto>>(patients);
-            return View(patientDtos);
+            var patientDtos = _mapper.Map<IEnumerable<PatientDto>>(patients);
+
+            var viewModel = new PatientRegistrationViewModel
+            {
+                Patients = patientDtos,
+                NewPatient = new PatientDto() // Initialize a new patient object for registration
+            };
+
+            return View(viewModel);
         }
 
         // GET: Patients/Details/5
@@ -57,8 +64,19 @@ namespace IHVNMedix.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _patientRepository.AddPatientAsync(patient);
-                return RedirectToAction(nameof(Index));
+                
+
+                // Check if FirstName is not null or empty
+                if (!string.IsNullOrWhiteSpace(patient.FirstName))
+                {
+                    await _patientRepository.AddPatientAsync(patient);
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    // Handle the case where FirstName is empty
+                    //ModelState.AddModelError("NewPatient.FirstName", "First Name is required.");
+                }
             }
             var patientDto = _mapper.Map<PatientDto>(patient);
             return View(patientDto);
@@ -93,7 +111,7 @@ namespace IHVNMedix.Controllers
                     
                     await _patientRepository.UpdatePatientAsync(patient);
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException ex)
                 {
                     if (!await PatientExistsAsync(patient.Id))
                     {
@@ -101,7 +119,10 @@ namespace IHVNMedix.Controllers
                     }
                     else
                     {
-                        throw;
+                        // Access the inner exception for details
+                        var innerException = ex.InnerException;
+                        // Log or handle the inner exception
+                        throw; // Rethrow the exception or handle it as needed
                     }
                 }
                 return RedirectToAction(nameof(Index));

@@ -51,6 +51,9 @@ namespace IHVNMedix.Data
                 .WithMany()
                 .HasForeignKey(a => a.DoctorId);
 
+            modelBuilder.Entity<HealthItem>()
+                .HasKey(h => h.Id);
+
             //Configuration for constraints
             modelBuilder.Entity<Patient>()
                 .Property(p => p.FirstName)

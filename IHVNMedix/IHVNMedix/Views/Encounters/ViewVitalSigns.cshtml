@@ -1,0 +1,25 @@
+﻿@model IEnumerable<VitalSigns>
+
+<h2>Vital Signs for Encounter</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Temperature (°C)</th>
+            <th>Systolic Pressure (mmHg)</th>
+            <th>Diatolic Pressure (mmHg)</th>
+            <!-- Add headers for other vital signs fields -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var vitalSignsEntry in Model)
+        {
+            <tr>
+                <td>@vitalSignsEntry.Temperature</td>
+                <td>@vitalSignsEntry.Systolic</td>
+                <td>@vitalSignsEntry.Diatolic</td>
+                <!-- Add cells for other vital signs fields -->
+            </tr>
+        }
+    </tbody>
+</table>

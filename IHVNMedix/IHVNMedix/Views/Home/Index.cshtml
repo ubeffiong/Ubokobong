@@ -3,6 +3,16 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">IHVN Medical Diagnosis App</h1>
+</div>
+<div class="text-center">
+    <a href="@Url.Action("Create", "Patients")" class="btn btn-primary">Register a New Patient</a>
+</div>
+<br />
+<div class="text-center">
+    <a href="@Url.Action("Create", "Encounters")" class="btn btn-primary">Create an Encounter</a>
+</div>
+<br />
+<div class="text-center">
+    <a href="@Url.Action("Create", "Appointments")" class="btn btn-primary">Book Appointment</a>
 </div>

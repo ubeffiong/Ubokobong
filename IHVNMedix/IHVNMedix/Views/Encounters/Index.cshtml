@@ -33,7 +33,11 @@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>  |
+                <a asp-action="EnterVitalSigns" asp-route-encounterId="@item.Id">Enter Vital Signs</a> |
+                <a asp-action="ViewVitalSigns" asp-route-encounterId="@item.Id">View Vital Signs</a>  |
+                <a asp-action="Consultation" asp-route-encounterId="@item.Id">Start Consultation</a>  |
+                <a asp-action="ViewDiagnosis" asp-route-encounterId="@item.Id">Diagmosis Result</a>
             </td>
         </tr>
 }

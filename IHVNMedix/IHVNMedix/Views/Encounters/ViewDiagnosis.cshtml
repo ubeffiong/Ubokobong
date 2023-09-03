@@ -1,0 +1,15 @@
+﻿@model IHVNMedix.DTOs.EncounterDto
+
+@{
+    ViewData["Title"] = "Diagnosis Results";
+}
+
+<!-- The rest of your view remains the same -->
+
+<h4>Diagnosis Results:</h4>
+<ul>
+    @foreach (var diagnosis in Model.DiagnosisResults)
+    {
+        <li>@diagnosis.DiagnosisResult</li>
+    }
+</ul>

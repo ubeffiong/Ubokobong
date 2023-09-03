@@ -1,0 +1,57 @@
+﻿@model IEnumerable<IHVNMedix.DTOs.AppointmentDto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Appointment List</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Specialty</th>
+            <th>Appointment Date</th>
+            <th>Actions</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var appointment in Model)
+        {
+        <tr>
+                <td>
+                    @if (appointment.Patient != null)
+                    {
+                            @appointment.Patient.FirstName @Html.Raw(" ") @appointment.Patient.LastName
+                    }
+                    else
+                    {
+                        <span class="text-danger">Patient Not Found</span>
+                    }
+                </td>
+                <td>
+                    @if (appointment.Patient != null)
+                    {
+                        @appointment.Doctor.FirstName @Html.Raw(" ") @appointment.Doctor.LastName
+                    }
+                    else
+                    {
+                        <span class="text-danger">Doctor Not Found</span>
+                    }
+                </td>
+                <td>@appointment.Specialty</td>
+                <td>@appointment.AppointmentDateTime</td>
+            <td>
+                    <a asp-action="Edit" asp-route-id="@appointment.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@appointment.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@appointment.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

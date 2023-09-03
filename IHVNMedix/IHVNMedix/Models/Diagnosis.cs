@@ -14,6 +14,8 @@ namespace IHVNMedix.Models
         public DateTime DiagnosisDate { get; set; }
         public string DiagnosisResult { get; set; }
         public bool IsValid { get; set; }
+
+
         //public ICollection<Symptoms> Symptoms { get; set;}
 
     }

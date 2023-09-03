@@ -10,6 +10,9 @@ using IHVNMedix.Repositories;
 using AutoMapper;
 using IHVNMedix.DTOs;
 using System.Numerics;
+using IHVNMedix.Services;
+using Microsoft.Extensions.Configuration;
+using System.Reflection;
 
 namespace IHVNMedix.Controllers
 {
@@ -17,11 +20,15 @@ namespace IHVNMedix.Controllers
     {
         private readonly IDiagnosisRepository _diagnosisRepository;
         private readonly IMapper _mapper;
+        private readonly MedicalDiagnosisService _diagnosisService;
+        private readonly IConfiguration _configuration;
 
-        public DiagnosesController(IDiagnosisRepository diagnosisRepository, IMapper mapper)
+        public DiagnosesController(IDiagnosisRepository diagnosisRepository, IMapper mapper, MedicalDiagnosisService diagnosisService, IConfiguration configuration)
         {
             _diagnosisRepository = diagnosisRepository;
             _mapper = mapper;
+            _diagnosisService = diagnosisService;
+            _configuration = configuration;
         }
 
         // GET: Diagnoses
@@ -134,6 +141,63 @@ namespace IHVNMedix.Controllers
         {
             var diagnosis = await _diagnosisRepository.GetDiagnosisByIdAsync(id);
             return diagnosis != null;
+        }
+
+        public async Task<IActionResult> GetDiagnosis()
+        {
+            try
+            {
+                // Get an access token
+                string accessToken = await _diagnosisService.GetAccessTokenAsync();
+
+                // Use the access token to make API requests
+                if (!string.IsNullOrEmpty(accessToken))
+                {
+                    // Example: Make a sample API request to load symptoms
+                    var symptoms = await _diagnosisService.LoadSymptomsAsync(accessToken);
+
+                    // Handle the API response (in this example, we're just returning it as JSON)
+                    return Json(symptoms);
+                }
+                else
+                {
+                    // Handle the case where access token retrieval failed
+                    return BadRequest("Failed to retrieve access token.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions, such as network errors or API request failures
+                return BadRequest($"API request failed: {ex.Message}");
+            }
+            //return View();
+        }
+
+        public async Task<IActionResult> LoadSymptoms()
+        {
+            string accessToken = await _diagnosisService.GetAccessTokenAsync();
+            var symptoms = await _diagnosisService.LoadSymptomsAsync(accessToken);
+
+            // Handle symptoms (e.g., display in a view)
+            return View(symptoms);
+        }
+
+        public async Task<IActionResult> LoadDiagnosis(List<int> selectedSymptoms, string gender, int yearOfBirth)
+        {
+            string accessToken = await _diagnosisService.GetAccessTokenAsync();
+            var diagnosis = await _diagnosisService.LoadDiagnosisAsync(selectedSymptoms, gender, yearOfBirth, accessToken);
+
+            // Handle diagnosis results (e.g., display in a view)
+            return View(diagnosis);
+        }
+
+        public async Task<IActionResult> LoadIssues()
+        {
+            string accessToken = await _diagnosisService.GetAccessTokenAsync();
+            var issues = await _diagnosisService.LoadIssuesAsync(accessToken);
+
+            // Handle issues (e.g., display in a view)
+            return View(issues);
         }
     }
 }

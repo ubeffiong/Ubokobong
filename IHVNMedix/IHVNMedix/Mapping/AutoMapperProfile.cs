@@ -15,6 +15,7 @@ namespace IHVNMedix.Mapping
             CreateMap<Appointment, AppointmentDto>();
             CreateMap<Doctor, DoctorDto>();
             CreateMap<Diagnosis, DiagnosisDto>();
+            CreateMap<AppointmentDto, Appointment>(); //this added to map data from DTO to data model for processing data received from the client
         }
 
     }

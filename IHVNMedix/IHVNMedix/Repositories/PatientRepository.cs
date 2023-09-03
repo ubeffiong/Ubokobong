@@ -30,17 +30,39 @@ namespace IHVNMedix.Repositories
 
         public async Task AddPatientAsync(Patient patient)
         {
-            //patient.Id = GenerateHashedId(); // Generate a hashed ID - Change patient Id to string in patient model
-            _context.Patients.Add(patient);
-            await _context.SaveChangesAsync();
+            try
+            {
+                //patient.Id = GenerateHashedId(); // Generate a hashed ID - Change patient Id to string in patient model
+                _context.Patients.Add(patient);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                // Access the inner exception for details
+                var innerException = ex.InnerException;
+                // Log or handle the inner exception
+                throw; // Rethrow the exception or handle it as needed
+            }
+            
         }
 
         public async Task UpdatePatientAsync(Patient patient)
         {
-            _context.Entry(patient).State = EntityState.Modified;
-            // Ensure that the ID remains unchanged
-            //_context.Entry(patient).Property(x => x.Id).IsModified = false;
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Entry(patient).State = EntityState.Modified;
+                // Ensure that the ID remains unchanged
+                //_context.Entry(patient).Property(x => x.Id).IsModified = false;
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                // Access the inner exception for details
+                var innerException = ex.InnerException;
+                // Log or handle the inner exception
+                throw; // Rethrow the exception or handle it as needed
+            }
+            
         }
 
         public async Task DeletePatientAsync(int id)

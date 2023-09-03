@@ -1,0 +1,35 @@
+﻿@model IHVNMedix.DTOs.VitalSignsDto
+
+@{
+    ViewData["Title"] = "Enter Vital Signs";
+}
+
+<h1>Enter Vital Signs</h1>
+
+<form asp-action="SaveVitalSigns">
+    <input type="hidden" asp-for="EncounterId" />
+
+    <div class="form-group">
+        <label asp-for="Temperature">Temperature (°C)</label>
+        <input asp-for="Temperature" class="form-control" />
+        <span asp-validation-for="Temperature" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Systolic">Systolic Pressure (mmHg)</label>
+        <input asp-for="Systolic" class="form-control" />
+        <span asp-validation-for="Systolic" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Diatolic">Diatolic Pressure (mmHg)</label>
+        <input asp-for="Diatolic" class="form-control" />
+        <span asp-validation-for="Diatolic" class="text-danger"></span>
+    </div>
+
+    <!-- Add other vital signs fields here -->
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+</form>

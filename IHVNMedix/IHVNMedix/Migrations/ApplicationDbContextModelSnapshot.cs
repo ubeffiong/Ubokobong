@@ -66,6 +66,9 @@ namespace IHVNMedix.Migrations
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("EncounterId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsValid")
                         .HasColumnType("bit");
 
@@ -75,6 +78,8 @@ namespace IHVNMedix.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DoctorId");
+
+                    b.HasIndex("EncounterId");
 
                     b.HasIndex("PatientId");
 
@@ -128,6 +133,23 @@ namespace IHVNMedix.Migrations
                     b.HasIndex("PatientId");
 
                     b.ToTable("Encounters");
+                });
+
+            modelBuilder.Entity("IHVNMedix.Models.HealthItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("EncounterId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EncounterId");
+
+                    b.ToTable("HealthItem");
                 });
 
             modelBuilder.Entity("IHVNMedix.Models.Patient", b =>
@@ -276,6 +298,10 @@ namespace IHVNMedix.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("IHVNMedix.Models.Encounter", null)
+                        .WithMany("DiagnosisResults")
+                        .HasForeignKey("EncounterId");
+
                     b.HasOne("IHVNMedix.Models.Patient", "Patient")
                         .WithMany()
                         .HasForeignKey("PatientId")
@@ -296,6 +322,13 @@ namespace IHVNMedix.Migrations
                         .IsRequired();
 
                     b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("IHVNMedix.Models.HealthItem", b =>
+                {
+                    b.HasOne("IHVNMedix.Models.Encounter", null)
+                        .WithMany("SymptomsResults")
+                        .HasForeignKey("EncounterId");
                 });
 
             modelBuilder.Entity("IHVNMedix.Models.SymptomDiagnosis", b =>
@@ -341,7 +374,11 @@ namespace IHVNMedix.Migrations
 
             modelBuilder.Entity("IHVNMedix.Models.Encounter", b =>
                 {
+                    b.Navigation("DiagnosisResults");
+
                     b.Navigation("Symptoms");
+
+                    b.Navigation("SymptomsResults");
 
                     b.Navigation("VitalSigns");
                 });

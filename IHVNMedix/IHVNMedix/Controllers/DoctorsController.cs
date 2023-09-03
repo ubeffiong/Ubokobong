@@ -9,6 +9,7 @@ using IHVNMedix.Models;
 using IHVNMedix.Repositories;
 using AutoMapper;
 using IHVNMedix.DTOs;
+using Microsoft.Extensions.Logging;
 
 namespace IHVNMedix.Controllers
 {
@@ -16,12 +17,19 @@ namespace IHVNMedix.Controllers
     {
         private readonly IDoctorRepository _doctorRepository;
         private readonly IAppointmentRepository _appointmentRepository;
+        private readonly IPatientRepository _patientRepository;
         private readonly IMapper _mapper;
-        public DoctorsController(IDoctorRepository doctorRepository, IAppointmentRepository appointmentRepository, IMapper mapper)
+        private readonly ILogger<DoctorsController> _logger;
+        public DoctorsController(IDoctorRepository doctorRepository, 
+            IAppointmentRepository appointmentRepository, 
+            IPatientRepository patientRepository, 
+            IMapper mapper, ILogger<DoctorsController> logger)
         {
             _doctorRepository = doctorRepository;
             _appointmentRepository = appointmentRepository;
+            _patientRepository = patientRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         // GET: Doctors
@@ -137,36 +145,65 @@ namespace IHVNMedix.Controllers
         }
 
         //GET: Doctor/BookAppointment/5
-        public IActionResult BookAppointment(int id)
+        public IActionResult BookAppointment()
         {
-            var doctor = _doctorRepository.GetDoctorByIdAsync(id).Result;
+            //var doctor = _doctorRepository.GetDoctorByIdAsync(id).Result;
+            var patients = _patientRepository.GetAllPatientsAsync().Result;
+            var doctors = _doctorRepository.GetAllDoctorsAsync().Result;
 
-            if (doctor == null) 
-            {
-                return NotFound();
-            }
+            // Map your entities to ViewModel if needed (using AutoMapper)
+            var patientDtos = _mapper.Map<List<PatientDto>>(patients);
+            var doctorDtos = _mapper.Map<List<DoctorDto>>(doctors);
 
             //Create a new appointment
-            var appointment = new Appointment
+            var viewModel = new AppointmentDto
             {
-                DoctorId = doctor.Id,
-                //I will set more properties as needed
+                YourListOfPatients = new SelectList(patientDtos, "Id", "FirstName"), 
+                YourListOfDoctors = new SelectList(doctorDtos, "Id", "FirstName") 
             };
-            var appointmentDto = _mapper.Map<AppointmentDto>(appointment);
-            return View(appointmentDto);
+            //var appointmentDto = _mapper.Map<AppointmentDto>(appointment);
+            return View(viewModel); 
         }
 
         //POST: Doctor/BookAppointment/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> BookAppointment(int id, [Bind("PatientId,DoctorId,AppointmentDateTime")] Appointment appointment)
+        public async Task<IActionResult> BookAppointment(int id, [Bind("PatientId,DoctorId, Specialty, AppointmentDateTime")] AppointmentDto appointmentDto)
         {
             if(ModelState.IsValid)
             {
-                await _appointmentRepository.AddAppointmentAsync(appointment);
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    // Map the AppointmentDto back to your Appointment entity
+                    var appointment = _mapper.Map<Appointment>(appointmentDto);
+
+                    // Add the appointment to the repository
+                    await _appointmentRepository.AddAppointmentAsync(appointment);
+
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    // Handle any exceptions that might occur during appointment creation
+                    ModelState.AddModelError("", "An error occurred while booking the appointment. Please try again later.");
+                    // Log the exception for debugging purposes
+                    _logger.LogError(ex, "Error booking appointment.");
+                }
+
             }
-            var appointmentDto = _mapper.Map<AppointmentDto>(appointment);
+
+            // If the model is not valid, return to the booking form with validation errors
+            var patients = _patientRepository.GetAllPatientsAsync().Result;
+            var doctors = _doctorRepository.GetAllDoctorsAsync().Result;
+
+            // Map your entities to ViewModel if needed (using AutoMapper)
+            var patientDtos = _mapper.Map<List<PatientDto>>(patients);
+            var doctorDtos = _mapper.Map<List<DoctorDto>>(doctors);
+
+            // Populate the dropdowns with the updated data
+            appointmentDto.YourListOfPatients = new SelectList(patientDtos, "Id", "FirstName"); 
+            appointmentDto.YourListOfDoctors = new SelectList(doctorDtos, "Id", "FirstName");
+
             return View(appointmentDto);
         }
     }

@@ -174,3 +174,13 @@ D:\Development\Projects\IHVNMedix\IHVNMedix\obj\Debug\net5.0\Razor\Views\Encount
 D:\Development\Projects\IHVNMedix\IHVNMedix\obj\Debug\net5.0\Razor\Views\Encounters\Details.cshtml.g.cs
 D:\Development\Projects\IHVNMedix\IHVNMedix\obj\Debug\net5.0\Razor\Views\Encounters\Edit.cshtml.g.cs
 D:\Development\Projects\IHVNMedix\IHVNMedix\obj\Debug\net5.0\Razor\Views\Encounters\Index.cshtml.g.cs
+D:\Development\Projects\IHVNMedix\IHVNMedix\obj\Debug\net5.0\Razor\Views\Encounters\EnterVitalSigns.cshtml.g.cs
+D:\Development\Projects\IHVNMedix\IHVNMedix\obj\Debug\net5.0\Razor\Views\Encounters\ViewVitalSigns.cshtml.g.cs
+D:\Development\Projects\IHVNMedix\IHVNMedix\obj\Debug\net5.0\Razor\Views\Doctors\BookAppointment.cshtml.g.cs
+D:\Development\Projects\IHVNMedix\IHVNMedix\obj\Debug\net5.0\Razor\Views\Appointments\Create.cshtml.g.cs
+D:\Development\Projects\IHVNMedix\IHVNMedix\obj\Debug\net5.0\Razor\Views\Appointments\Delete.cshtml.g.cs
+D:\Development\Projects\IHVNMedix\IHVNMedix\obj\Debug\net5.0\Razor\Views\Appointments\Details.cshtml.g.cs
+D:\Development\Projects\IHVNMedix\IHVNMedix\obj\Debug\net5.0\Razor\Views\Appointments\Edit.cshtml.g.cs
+D:\Development\Projects\IHVNMedix\IHVNMedix\obj\Debug\net5.0\Razor\Views\Appointments\Index.cshtml.g.cs
+D:\Development\Projects\IHVNMedix\IHVNMedix\obj\Debug\net5.0\Razor\Views\Encounters\Consultation.cshtml.g.cs
+D:\Development\Projects\IHVNMedix\IHVNMedix\obj\Debug\net5.0\Razor\Views\Encounters\ViewDiagnosis.cshtml.g.cs
