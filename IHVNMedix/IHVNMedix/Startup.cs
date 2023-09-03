@@ -41,12 +41,12 @@ namespace IHVNMedix
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 
-            //register the MedicalDiagnosisService as a singleton
+            //registering the MedicalDiagnosisService as a singleton
             services.AddHttpClient<MedicalDiagnosisService>(client =>
             {
                 client.BaseAddress = new Uri(_configuration["HealthServiceUrl"]);
             });
-            // Register IConfiguration for access in controllers or services
+            // Registering IConfiguration for access in services
             services.AddScoped<IMedicalDiagnosisService, MedicalDiagnosisService>();
 
             services.AddControllersWithViews();
